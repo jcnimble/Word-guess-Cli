@@ -10,3 +10,28 @@ to either display an underlying character or a blank placeholder (such as an und
 
   * A function that takes a character as an argument and checks it 
   against the underlying character, updating the stored boolean value to true if it was guessed correctly */
+
+function letter(value) {
+  this.letter = value;
+  this.guessed = flase;
+
+  this.toString = function () {
+    if (this.letter === " ") {
+      this.guessed = true;
+      return " ";
+    } else {
+      return this.letter;
+    }
+  };
+
+  this.guess = function (guess) {
+    if (guess === this.letter) {
+      this.guessed = true;
+    }
+  };
+
+}
+module.exports = Letter;
+
+
+
