@@ -22,16 +22,16 @@ function Word(answer) {
 };
 
 this.log = function () {
-  var asnwerLog = "";
+  var answerLog = "";
   for (var i = 0; i < this.objArray.length; i++) {
     answerLog = this.objArray[i] + " ";
   }
-  console.log(AnswerLOg + "\n===========================\n");
+  console.log(answerLog + "\n===========================\n");
 };
 
-this.UserGuess = function (input) {
+this.userGuess = function (input) {
   for (var i = 0; i < this.objArray.length; i++) {
-    this.objArray[i].guess(inout);
+    this.objArray[i].guess(input);
   }
 }
 

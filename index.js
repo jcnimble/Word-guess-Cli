@@ -8,33 +8,28 @@
 
 4. `Word.js` *should only* require `Letter.js` */
 
-var Word = required("./Word.js");
+var Word = require("./Word.js");
 var inquirer = require("inquirer");
 
 var letterArray = "abcdefghijklmnopqrstuvwxyz"
 
-var Avengers = [
-  "Iron Man",
-  "Captain America",
-  "Thor",
-  "The Hulk",
-  "Black Widow",
-  "Hawkeye",
-  "Black Panther",
-  "Spider Man",
-  "Doctor Strange",
-  "Ant Man",
-  "War Machine",
-  "Falcon",
-  "Vision",
-  "Scarlet Witch",
+var Colors = [
+  "red",
+  "yellow",
+  "blue",
+  "green",
+  "orange",
+  "purple"
 ];
 
-var randomIndex = Math.floor(Math.random() * Avengers.length);
-var randomWord = Avengers[randomIndex];
+var randomIndex = Math.floor(Math.random() * Colors.length);
+var randomWord = Colors[randomIndex];
 
 var computerWord = new Word(randomWord);
-var requireNewWord = false;
+// console.log(computerWord);
+// console.log(computerWord.objArray);
+
+var requireNewWord = true;
 
 var incorrectLetters = [];
 var correctLetters = [];
@@ -43,19 +38,22 @@ var guessesLeft = 10;
 
 function theLogic() {
   if (requireNewWord) {
-    var randomIndex = Math.floor(Math.random() * Avengers.length);
-    var randomWord = Avengers[randomIndex];
+    var randomIndex = Math.floor(Math.random() * Colors.length);
+    var randomWord = Colors[randomIndex];
     var computerWord = new Word(randomWord);
+   
+  
     var requireNewWord = false;
   }
 
-  var workComplete = [];
+  var wordComplete = [];
 
-  if (workComplete.includes(false)) {
+
+  if (wordComplete.includes(false)) {
     inquirer.prompt([
       {
         type: "input",
-        message: "Select a letter from A to Z",
+        message: "Select a letter from A to Z!",
         name: "userInput"
       }
 
@@ -78,7 +76,7 @@ function theLogic() {
           computerWord.userGuess(input.userInput);
 
           computerWord.objArray.forEach(wordCheck);
-          if (wordCheckArra.join(" ") === wordComplete.join(" ")) {
+          if (wordCheckArray.join(" ") === wordComplete.join(" ")) {
             console.log("\nIncorrect\n");
 
             incorrectLetters.push(input.userInput);
@@ -88,7 +86,7 @@ function theLogic() {
             console.log("\nCorrect\n");
             correctLetters.push(input.userInput);
           }
-          computerWord();
+          computerWord.log();
 
           console.log("Guesses Left:" + guessesLeft + "\n");
           console.log("Letters Guessed:" + incorrectLetters.join(" ") + "\n");
@@ -97,6 +95,7 @@ function theLogic() {
             theLogic();
           } else {
             console.log("You have Lost!\n");
+            restartGame();
           }
           function wordCheck(key) {
             wordCheckArray.push(key.guessed);
@@ -106,6 +105,7 @@ function theLogic() {
     });
   } else {
     console.log("You Won!\n");
+    restartGame();
   }
   function completeCheck(key) {
     wordComplete.push(key.guessed);
@@ -113,7 +113,7 @@ function theLogic() {
 
 }
 
-function restartGame (){
+function restartGame() {
   inquirer.prompt([
     {
       type: "list",
@@ -121,17 +121,17 @@ function restartGame (){
       choices: ["Play Again", "Exit"],
       name: "restart"
     }
-  ]).then (function(input){
-    if(input.restart === "Play Again"){
+  ]).then(function (input) {
+    if (input.restart === "Play Again") {
       requireNewWord = true;
       incorrectLetters = [];
       correctLetters = [];
       guessesLeft = 10;
       theLogic();
-    }else{
+    } else {
       return;
     }
-    });
+  });
 }
 theLogic();
 
